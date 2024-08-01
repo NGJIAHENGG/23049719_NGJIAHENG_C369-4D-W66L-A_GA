@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Wallet - Heng Ah Got Insurance</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .wallet-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .wallet-section h2 {
+            margin-bottom: 1em;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .wallet-section p {
+            margin-bottom: 1em;
+            font-size: 1.5em;
+            color: #555;
+        }
+
+        .wallet-section .top-up-button {
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 5px;
+            background-color: #3d2b24;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .wallet-section .top-up-button:hover {
+            background-color: #7a5537;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="insurances.html">Insurances</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
+            </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
+            <div class="auth-links">
+                <a href="register.html">Register</a> | <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="wallet-section">
+            <h2>Digital Wallet</h2>
+            <p>Balance: $<span id="walletBalance">0.00</span></p>
+            <a href="top_up.html" class="top-up-button">Top Up</a>
+        </section>
+    </main>
+    <script>
+        const walletBalance = parseFloat(localStorage.getItem('walletBalance')) || 0.00;
+        document.getElementById('walletBalance').textContent = walletBalance.toFixed(2);
+    </script>
+</body>
+</html>
+
+

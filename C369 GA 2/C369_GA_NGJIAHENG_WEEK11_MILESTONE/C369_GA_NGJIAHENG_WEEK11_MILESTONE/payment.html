@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Heng Ah Got Insurance</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="insurances.html">Insurances</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
+            </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
+            <div class="auth-links">
+                <a href="register.html">Register</a> | <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="insurance-plan">
+            <h2 id="planTitle">PREMIUM PLAN</h2>
+            <p>Insured up to <span id="coveragePercentage">50%</span></p>
+            <p>The cost of the plan will be decided based on the type of service we are going to be insuring for you.</p>
+            <h3>Choose Your Payment Method</h3>
+            <form class="payment-form" id="paymentForm">
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method" name="payment-method" required>
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="bank-transfer">Bank Transfer</option>
+                </select>
+                <button type="submit" class="next-button">Next</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        const titleElement = document.getElementById('planTitle');
+        const coverageElement = document.getElementById('coveragePercentage');
+
+        if (plan) {
+            titleElement.textContent = `${plan.toUpperCase()} PLAN`;
+            if (plan === 'standard') {
+                coverageElement.textContent = '25%';
+            } else if (plan === 'premium') {
+                coverageElement.textContent = '50%';
+            } else if (plan === 'super_premium') {
+                coverageElement.textContent = '100%';
+            }
+        }
+
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const paymentMethod = document.getElementById('payment-method').value;
+
+            // Save the transaction
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const transaction = {
+                date: new Date().toLocaleString(),
+                plan: plan.toUpperCase() + ' PLAN',
+                method: paymentMethod,
+                amount: 'N/A'  // Replace with actual amount if available
+            };
+            transactions.push(transaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            window.location.href = `confirmation.html?plan=${plan}&paymentMethod=${paymentMethod}`;
+        });
+    </script>
+</body>
+</html>
+
+

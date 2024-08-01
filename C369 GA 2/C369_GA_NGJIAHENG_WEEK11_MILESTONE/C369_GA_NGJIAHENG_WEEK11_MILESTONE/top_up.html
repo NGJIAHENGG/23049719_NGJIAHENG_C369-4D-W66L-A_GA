@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up - Heng Ah Got Insurance</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .top-up-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .top-up-section h2 {
+            margin-bottom: 1em;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .top-up-section input[type="number"] {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .top-up-section button {
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 5px;
+            background-color: #3d2b24;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .top-up-section button:hover {
+            background-color: #7a5537;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="insurances.html">Insurances</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
+            </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
+            <div class="auth-links">
+                <a href="register.html">Register</a> | <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="top-up-section">
+            <h2>Top Up Digital Wallet</h2>
+            <form id="topUpForm">
+                <input type="number" id="topUpAmount" name="topUpAmount" placeholder="Enter Amount" required>
+                <button type="submit">Confirm</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.getElementById('topUpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const topUpAmount = parseFloat(document.getElementById('topUpAmount').value);
+            localStorage.setItem('topUpAmount', topUpAmount);
+            window.location.href = '2fa.html';
+        });
+    </script>
+</body>
+</html>
+

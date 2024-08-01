@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2em 0;
+        }
+
+        th, td {
+            padding: 1em;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .clear-button {
+            display: inline-block;
+            padding: 0.75em 1em;
+            margin-top: 1em;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            background-color: #3d2b24;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .clear-button:hover {
+            background-color: #7a5537;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="insurances.html">Insurances</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
+            </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
+            <div class="auth-links">
+                <a href="register.html">Register</a> | <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Transaction History</h2>
+            <button class="clear-button" id="clearHistoryButton">Clear History</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Plan</th>
+                        <th>Payment Method</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionTableBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script>
+        const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        const transactionTableBody = document.getElementById('transactionTableBody');
+
+        function renderTransactions() {
+            transactionTableBody.innerHTML = '';
+            transactions.forEach(transaction => {
+                if (transaction.plan !== 'Top Up') {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${transaction.date}</td>
+                        <td>${transaction.plan}</td>
+                        <td>${transaction.method}</td>
+                        <td>${transaction.amount}</td>
+                    `;
+                    transactionTableBody.appendChild(row);
+                }
+            });
+        }
+
+        document.getElementById('clearHistoryButton').addEventListener('click', () => {
+            localStorage.removeItem('transactions');
+            transactions.length = 0;
+            renderTransactions();
+        });
+
+        renderTransactions();
+    </script>
+</body>
+</html>
+
+
+
