@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- I declare that this code was written by me.
-        I will not copy or allow others to copy my code.
-        I understand that copying code is considered as plagiarism.
-        Student Name: NG JIA HENG
-        Student ID: 23049719
-        Class: W66L
-        Date/Time Last modified: 04/08/2024
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up - Heng Ah Got Insurance</title>
+    <title>PayNow - Heng Ah Got Insurance</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .top-up-section {
+        .paynow-section {
             max-width: 600px;
             margin: 0 auto;
             padding: 2em;
@@ -22,22 +14,20 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
- 
-        .top-up-section h2 {
+
+        .paynow-section h2 {
             margin-bottom: 1em;
             font-size: 2em;
             color: #333;
         }
- 
-        .top-up-section input[type="number"] {
-            width: 100%;
-            padding: 0.5em;
-            margin-bottom: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .paynow-section img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
         }
- 
-        .top-up-section button {
+
+        .paynow-section button {
             padding: 0.75em 1.5em;
             border: none;
             border-radius: 5px;
@@ -45,9 +35,10 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
+            text-decoration: none;
         }
- 
-        .top-up-section button:hover {
+
+        .paynow-section button:hover {
             background-color: #7a5537;
         }
     </style>
@@ -70,21 +61,11 @@
         </nav>
     </header>
     <main>
-        <section class="top-up-section">
-            <h2>Top Up Digital Wallet</h2>
-            <form id="topUpForm">
-                <input type="number" id="topUpAmount" name="topUpAmount" placeholder="Enter Amount" required>
-                <button type="submit">Confirm</button>
-            </form>
+        <section class="paynow-section">
+            <h2>PayNow QR Code</h2>
+            <img src="/images/qrcode.png">
+            <button onclick="window.location.href='index.html'">Done</button>
         </section>
     </main>
-    <script>
-        document.getElementById('topUpForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const topUpAmount = parseFloat(document.getElementById('topUpAmount').value);
-            localStorage.setItem('topUpAmount', topUpAmount);
-            window.location.href = '2fa.html';
-        });
-    </script>
 </body>
 </html>

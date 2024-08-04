@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- I declare that this code was written by me.
-        I will not copy or allow others to copy my code.
-        I understand that copying code is considered as plagiarism.
-        Student Name: NG JIA HENG
-        Student ID: 23049719
-        Class: W66L
-        Date/Time Last modified: 04/08/2024
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heng Ah Got Insurance - Register</title>
@@ -32,7 +24,7 @@
     <main>
         <section class="register-section">
             <h2>SIGN UP</h2>
-            <form class="register-form">
+            <form class="register-form" id="registerForm">
                 <label for="email">Email Address:</label>
                 <input type="email" id="email" name="email" required>
                 
@@ -51,5 +43,30 @@
             </form>
         </section>
     </main>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+
+            let users = JSON.parse(localStorage.getItem('users')) || {};
+            if (users[email]) {
+                alert('Email already exists. Please use a different email.');
+                return;
+            }
+
+            users[email] = {
+                password: password,
+                phone: phone,
+                walletBalance: 0.00,
+                transactions: []
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', email);
+            window.location.href = 'index.html';
+        });
+    </script>
 </body>
 </html>
+

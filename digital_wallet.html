@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- I declare that this code was written by me.
-        I will not copy or allow others to copy my code.
-        I understand that copying code is considered as plagiarism.
-        Student Name: NG JIA HENG
-        Student ID: 23049719
-        Class: W66L
-        Date/Time Last modified: 04/08/2024
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Wallet - Heng Ah Got Insurance</title>
@@ -29,13 +21,12 @@
             color: #333;
         }
 
-        .wallet-section p {
-            margin-bottom: 1em;
+        .wallet-section .balance {
             font-size: 1.5em;
-            color: #555;
+            margin-bottom: 1em;
         }
 
-        .wallet-section .top-up-button {
+        .wallet-section button {
             padding: 0.75em 1.5em;
             border: none;
             border-radius: 5px;
@@ -44,9 +35,10 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
+            margin-top: 15px;
         }
 
-        .wallet-section .top-up-button:hover {
+        .wallet-section button:hover {
             background-color: #7a5537;
         }
     </style>
@@ -71,15 +63,23 @@
     <main>
         <section class="wallet-section">
             <h2>Digital Wallet</h2>
-            <p>Balance: $<span id="walletBalance">0.00</span></p>
-            <a href="top_up.html" class="top-up-button">Top Up</a>
+            <p class="balance" id="walletBalance">Balance: $0.00</p>
+            <button onclick="window.location.href='topup.html'">Top Up</button>
         </section>
     </main>
     <script>
-        const walletBalance = parseFloat(localStorage.getItem('walletBalance')) || 0.00;
-        document.getElementById('walletBalance').textContent = walletBalance.toFixed(2);
+        const currentUser = localStorage.getItem('currentUser');
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (currentUser && users[currentUser]) {
+            document.getElementById('walletBalance').textContent = `Balance: $${users[currentUser].walletBalance.toFixed(2)}`;
+        } else {
+            alert('No user logged in. Please log in first.');
+            window.location.href = 'login.html';
+        }
     </script>
 </body>
 </html>
+
 
 

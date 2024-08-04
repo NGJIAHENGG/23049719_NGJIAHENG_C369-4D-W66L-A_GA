@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- I declare that this code was written by me.
-        I will not copy or allow others to copy my code.
-        I understand that copying code is considered as plagiarism.
-        Student Name: NG JIA HENG
-        Student ID: 23049719
-        Class: W66L
-        Date/Time Last modified: 04/08/2024
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment - Heng Ah Got Insurance</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .payment-form label {
+            margin-top: 10px;
+        }
+
+        .payment-form select, .payment-form button {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .payment-form button {
+            background-color: #3d2b24;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .payment-form button:hover {
+            background-color: #7a5537;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .button-group .custom-button {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .button-group .custom-button:last-child {
+            margin-right: 0;
+        }
+
+        .price {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -35,6 +80,7 @@
         <section class="insurance-plan">
             <h2 id="planTitle">PREMIUM PLAN</h2>
             <p>Insured up to <span id="coveragePercentage">50%</span></p>
+            <p class="price" id="planPrice">Price: $25</p>
             <p>The cost of the plan will be decided based on the type of service we are going to be insuring for you.</p>
             <h3>Choose Your Payment Method</h3>
             <form class="payment-form" id="paymentForm">
@@ -45,6 +91,10 @@
                     <option value="bank-transfer">Bank Transfer</option>
                 </select>
                 <button type="submit" class="next-button">Next</button>
+                <div class="button-group">
+                    <button type="button" class="custom-button" id="digitalWalletButton">Digital Wallet</button>
+                    <button type="button" class="custom-button" id="paynowButton">PayNow</button>
+                </div>
             </form>
         </section>
     </main>
@@ -53,37 +103,72 @@
         const plan = urlParams.get('plan');
         const titleElement = document.getElementById('planTitle');
         const coverageElement = document.getElementById('coveragePercentage');
+        const priceElement = document.getElementById('planPrice');
 
         if (plan) {
             titleElement.textContent = `${plan.toUpperCase()} PLAN`;
             if (plan === 'standard') {
                 coverageElement.textContent = '25%';
+                priceElement.textContent = 'Price: $15';
             } else if (plan === 'premium') {
                 coverageElement.textContent = '50%';
+                priceElement.textContent = 'Price: $25';
             } else if (plan === 'super_premium') {
                 coverageElement.textContent = '100%';
+                priceElement.textContent = 'Price: $50';
             }
         }
 
         document.getElementById('paymentForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const paymentMethod = document.getElementById('payment-method').value;
+            const price = parseFloat(priceElement.textContent.split('$')[1]);
 
-            // Save the transaction
-            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            const transaction = {
-                date: new Date().toLocaleString(),
-                plan: plan.toUpperCase() + ' PLAN',
-                method: paymentMethod,
-                amount: 'N/A'  // Replace with actual amount if available
-            };
-            transactions.push(transaction);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
+            window.location.href = `fillup.html?plan=${plan}&paymentMethod=${paymentMethod}&price=${price}`;
+        });
 
-            window.location.href = `confirmation.html?plan=${plan}&paymentMethod=${paymentMethod}`;
+        document.getElementById('digitalWalletButton').addEventListener('click', function() {
+            const price = parseFloat(priceElement.textContent.split('$')[1]);
+            const currentUser = localStorage.getItem('currentUser');
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+
+            if (currentUser && users[currentUser]) {
+                let walletBalance = users[currentUser].walletBalance;
+
+                if (walletBalance >= price) {
+                    walletBalance -= price;
+                    users[currentUser].walletBalance = walletBalance;
+                    users[currentUser].transactions.push({
+                        date: new Date().toLocaleString(),
+                        plan: plan.toUpperCase() + ' PLAN',
+                        method: 'Digital Wallet',
+                        amount: price.toFixed(2)
+                    });
+                    localStorage.setItem('users', JSON.stringify(users));
+
+                    window.location.href = `confirmation.html?plan=${plan}&paymentMethod=digital_wallet&price=${price}`;
+                } else {
+                    alert("Insufficient balance in the digital wallet.");
+                }
+            } else {
+                alert('No user logged in. Please log in first.');
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('paynowButton').addEventListener('click', function() {
+            window.location.href = 'paynow.html';
         });
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 

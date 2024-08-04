@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Information - Heng Ah Got Insurance</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .fillup-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fillup-form label {
+            margin-top: 10px;
+        }
+
+        .fillup-form input {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .fillup-form button {
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 5px;
+            background-color: #3d2b24;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .fillup-form button:hover {
+            background-color: #7a5537;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="insurances.html">Insurances</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
+            </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
+            <div class="auth-links">
+                <a href="register.html">Register</a> | <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="fillup-section">
+            <h2>Enter Card Information</h2>
+            <form class="fillup-form" id="fillupForm">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="card-number" required>
+                <label for="cardholder-name">Cardholder Name:</label>
+                <input type="text" id="cardholder-name" name="cardholder-name" required>
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date" name="expiry-date" required>
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required>
+                <button type="submit">Confirm</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.getElementById('fillupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan');
+            const paymentMethod = urlParams.get('paymentMethod');
+            const price = urlParams.get('price');
+
+            // Save the transaction
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const transaction = {
+                date: new Date().toLocaleString(),
+                plan: plan.toUpperCase() + ' PLAN',
+                method: paymentMethod,
+                amount: price
+            };
+            transactions.push(transaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            window.location.href = `confirmation.html?plan=${plan}&paymentMethod=${paymentMethod}&price=${price}`;
+        });
+    </script>
+</body>
+</html>
+

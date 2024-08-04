@@ -3,33 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2FA Verification - Heng Ah Got Insurance</title>
+    <title>Top Up - Heng Ah Got Insurance</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .twofa-section {
-            max-width: 600px;
+        .topup-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
             margin: 0 auto;
             padding: 2em;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
 
-        .twofa-section h2 {
-            margin-bottom: 1em;
-            font-size: 2em;
-            color: #333;
+        .topup-form label {
+            margin-top: 10px;
         }
 
-        .twofa-section input[type="text"] {
-            width: 100%;
-            padding: 0.5em;
-            margin-bottom: 1em;
+        .topup-form input {
+            padding: 8px;
+            margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        .twofa-section button {
+        .topup-form button {
             padding: 0.75em 1.5em;
             border: none;
             border-radius: 5px;
@@ -37,9 +35,11 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
         }
 
-        .twofa-section button:hover {
+        .topup-form button:hover {
             background-color: #7a5537;
         }
     </style>
@@ -62,30 +62,34 @@
         </nav>
     </header>
     <main>
-        <section class="twofa-section">
-            <h2>2FA Verification</h2>
-            <form id="2faForm">
-                <input type="text" id="2faCode" name="2faCode" placeholder="Enter 2FA Code" required>
-                <button type="submit">Verify</button>
+        <section class="topup-section">
+            <h2>Top Up Digital Wallet</h2>
+            <form class="topup-form" id="topupForm">
+                <label for="amount">Amount to Top Up:</label>
+                <input type="number" id="amount" name="amount" required>
+                <button type="submit">Confirm</button>
             </form>
         </section>
     </main>
     <script>
-        document.getElementById('2faForm').addEventListener('submit', function(event) {
+        document.getElementById('topupForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Here you can add logic to verify the 2FA code
-            const walletBalance = parseFloat(localStorage.getItem('walletBalance') || '100.50');
-            const topUpAmount = parseFloat(localStorage.getItem('topUpAmount'));
-            const newBalance = walletBalance + topUpAmount;
-            localStorage.setItem('walletBalance', newBalance.toFixed(2));
+            const amount = parseFloat(document.getElementById('amount').value);
+            const currentUser = localStorage.getItem('currentUser');
+            const users = JSON.parse(localStorage.getItem('users')) || {};
 
-            // No transaction is saved for top-ups
+            if (currentUser && users[currentUser]) {
+                users[currentUser].walletBalance += amount;
+                localStorage.setItem('users', JSON.stringify(users));
 
-            window.location.href = 'success.html';
+                window.location.href = 'success.html';
+            } else {
+                alert('No user logged in. Please log in first.');
+                window.location.href = 'login.html';
+            }
         });
     </script>
 </body>
 </html>
-
 
 

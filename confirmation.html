@@ -1,30 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- I declare that this code was written by me.
-        I will not copy or allow others to copy my code.
-        I understand that copying code is considered as plagiarism.
-        Student Name: NG JIA HENG
-        Student ID: 23049719
-        Class: W66L
-        Date/Time Last modified: 04/08/2024
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heng Ah Got Insurance - Confirmation</title>
+    <title>Confirmation - Heng Ah Got Insurance</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        main {
-            text-align: center;
-            padding: 2em;
-        }
-
-        .message {
-            font-size: 1.5em;
-            color: #555;
-            margin-top: 1em;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -35,16 +15,46 @@
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="transaction_history.html">Transaction History</a></li>
+                <li><a href="digital_wallet.html">Digital Wallet</a></li>
             </ul>
+            <h1>HENG AH GOT INSURANCE</h1>
             <div class="auth-links">
                 <a href="register.html">Register</a> | <a href="login.html">Login</a>
             </div>
-            <h1>HENG AH GOT INSURANCE</h1>
         </nav>
     </header>
     <main>
-        <h2>THANK YOU FOR USING US!</h2>
-        <p class="message">We will contact you as soon as possible. Please do check your email for updates. We hope to hear from you soon!</p>
+        <section class="confirmation-section">
+            <h2>Confirmation</h2>
+            <p id="confirmationText"></p>
+            <p id="updatedBalance"></p>
+            <a href="index.html" class="next-button">Return to Home</a>
+        </section>
     </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        const paymentMethod = urlParams.get('paymentMethod');
+        const price = urlParams.get('price');
+        const confirmationText = document.getElementById('confirmationText');
+        const updatedBalanceText = document.getElementById('updatedBalance');
+
+        if (plan && paymentMethod && price) {
+            confirmationText.textContent = `You have chosen the ${plan.toUpperCase()} plan and will be paying via ${paymentMethod.replace('-', ' ')}. The amount paid is $${price}.`;
+            
+            const currentUser = localStorage.getItem('currentUser');
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            
+            if (currentUser && users[currentUser]) {
+                updatedBalanceText.textContent = `Your updated wallet balance is $${users[currentUser].walletBalance.toFixed(2)}.`;
+            }
+        } else {
+            confirmationText.textContent = `There was an issue with your plan selection or payment method. Please try again.`;
+        }
+    </script>
 </body>
 </html>
+
+
+
+
