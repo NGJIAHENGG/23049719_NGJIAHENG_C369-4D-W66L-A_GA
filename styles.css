@@ -184,3 +184,8 @@ p {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.homeimage {
+    width: 1200px;
+    height: 700px;
+}
